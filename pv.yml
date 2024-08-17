@@ -9,4 +9,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/data
+    #path: /mnt/data
+    path: /Users/yashbhatt/Desktop/Yash/Devops/HeroVired/Kubernetes/TravelMemory-K8s/data
