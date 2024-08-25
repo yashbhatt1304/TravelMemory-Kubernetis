@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travelmemoryfrontend
+  namespace: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: TravelMemory-frontend
+  template:
+    metadata:
+      labels:
+        app: TravelMemory-frontend
+    spec:
+      containers:
+      - name: travelmemoryfrontend
+        image: yashbbhatt/travel_memory_frontend:latest
+        env:
+        - name: PORT
+          value: "3000"
+        ports:
+        - containerPort: 3000

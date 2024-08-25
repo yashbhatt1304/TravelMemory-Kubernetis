@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: travelmemorybackend
-        image: sukhilnair/jenkins-class:backend-11
+        image: yashbbhatt/travel_memory_backend:latest
         env:
         - name: MONGO_URI
           valueFrom: 
