@@ -15,9 +15,12 @@ spec:
     spec:
       containers:
       - name: travelmemoryfrontend
-        image: yashbbhatt/travel_memory_frontend:latest
+        image: prashantdey/travelmemory:fe
         env:
-        - name: PORT
-          value: "3000"
+        - name: REACT_APP_BACKEND_URL
+          valueFrom: 
+            configMapKeyRef:
+              name: travelmemoryfrontend-config
+              key: REACT_APP_BACKEND_URL
         ports:
         - containerPort: 3000
