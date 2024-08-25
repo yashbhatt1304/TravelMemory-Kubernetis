@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: travelmemoryfrontend
-        image: prashantdey/travelmemory:fe
+        image: yashbbhatt/travel_memory_frontend
         env:
         - name: REACT_APP_BACKEND_URL
           valueFrom: 
