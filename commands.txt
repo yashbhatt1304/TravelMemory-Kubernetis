@@ -3,8 +3,10 @@ kubectl config use-context minikube
 --------Run this in same sequence-------
 kubectl apply -f namespace.yml
 kubectl apply -f pvc.yml
-kubectl get pv -n database
+kubectl get pvc -n database
 kubectl apply -f db-deployment.yml
+kubectl apply -f pv.yml
+kubectl get pv -n database
 kubectl apply -f db-service.yml
 kubectl get pods -n database
 kubectl get svc -n database
