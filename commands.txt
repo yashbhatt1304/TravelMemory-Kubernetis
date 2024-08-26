@@ -1,6 +1,6 @@
 kubectl config use-context minikube
 
---------Run this in same sequence-------
+--------Run this in same sequence for DB-------
 kubectl apply -f namespace.yml
 kubectl apply -f pvc.yml
 kubectl get pvc -n database
@@ -14,3 +14,57 @@ kubectl get svc -n database
 ---------If you're getting an address after running below commands that means mongodb is running/reachable--------
 kubectl run -i --tty --rm debug --image=busybox --restart=Never -- sh
 nslookup mongodb-service.database.svc.cluster.local
+
+--------Run this in same sequence for Backend-------
+kubectl apply -f namespace.yml
+kubectl apply -f secret.yml
+kubectl apply -f deployment.yml
+kubectl apply -f service.yml
+kubectl get pods -n backend
+kubectl get svc -n backend
+
+--------Run this in same sequence for Frontend-------
+kubectl apply -f namespace.yml
+kubectl apply -f configMap.yml
+kubectl apply -f deployment.yml
+kubectl apply -f service.yml
+kubectl get pods -n frontend
+kubectl get svc -n frontend
+
+--------- Commands for Helm chart --------
+1. Create Chart.yaml & values.yaml file
+
+2. Create a helm package from root directory of app with below command.
+helm package TravelMemory-K8s
+this will generate .tgz file
+
+3. Install the helm with below command.
+helm install travelmemoryapp travelmemoryapp-0.1.0.tgz
+
+4. Create a S3 bucket and upload this .tgz file there.
+Make sure it's public accessible and apply the below policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::yashhelm/*"
+        }
+    ]
+}
+
+5. Generate index.yaml file with below command.
+helm repo index . --url https://yashtravelmemory.s3.ap-northeast-3.amazonaws.com/
+upload it to the bucket.
+
+6. Create a new repo on artifacthub.io and add the bucket url
+https://yashtravelmemory.s3.ap-northeast-3.amazonaws.com/
+
+7. Now you can add the repository to your local system by below command.
+helm repo add yash-Travel-Memory https://yashtravelmemory.s3.ap-northeast-3.amazonaws.com/
+
+8. Check the repository
+helm repo list
